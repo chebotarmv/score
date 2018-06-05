@@ -25,7 +25,7 @@ SECRET_KEY = 'to1@n4_9_-cr1r_5kv=%tl=v(gx-h)v8o)d8+@p5&sk#(ewcrm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'chebotarmv.pythonanywhere.com']
 
 
 # Application definition
