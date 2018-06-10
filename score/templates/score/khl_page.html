@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Список команд</title>
+ </head>
+ <body>
+ <p><a href="">Главная</a></p>
+ <p><a href="">KHL</a></p>
+ <p><a href="">NHL</a></p>
+ <p><a href="">Внести данные</a></p>
+ <h1><a href="">KHL</a> </h1>
+ <h3><a href="">KHL Archive</a> </h3>
+ {% for team in khl_teams %}
+    <div>
+        <h1><a href="">{{ team }}</a></h1>
+    </div>
+{% endfor %}
+
+ </body>
