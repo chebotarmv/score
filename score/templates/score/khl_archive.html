@@ -2,19 +2,18 @@
 <html>
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Список команд</title>
+  <title>Архив игр КХЛ</title>
  </head>
  <body>
  <p><a href="http://chebotarmv.pythonanywhere.com/home">Главная</a></p>
  <p><a href="http://chebotarmv.pythonanywhere.com/khl">KHL</a></p>
  <p><a href="http://chebotarmv.pythonanywhere.com/nhl">NHL</a></p>
  <p><a href="">Внести данные</a></p>
- <h1><a href="http://chebotarmv.pythonanywhere.com/nhl">NHL</a> </h1>
- <h3><a href="http://chebotarmv.pythonanywhere.com/archiveknhl">NHL Archive</a> </h3>
- {% for team in nhl_teams %}
-    <div>
-        <h1><a href="">{{ team }}</a></h1>
-    </div>
-{% endfor %}
 
+ {% for dat in data %}
+ <div><a href=""> {{ dat.id }} </a> </div>
+ <div><a href=""> {{ dat.first_team_name_id }} </a> </div>
+ <div> <a href=""> {{ dat.second_team_name_id }} </a> </div>
+ <div> <a href=""> {{ dat.game_data }} </a> </div>
+ {% endfor%}
  </body>

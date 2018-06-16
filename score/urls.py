@@ -2,9 +2,11 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^home/', views.home_page, name='home_page'),
+    url(r'^home', views.home_page, name='home_page'),
     url(r'^khl', views.khl, name='khl'),
     url(r'^nhl', views.nhl, name='nhl'),
+    url(r'^archivekhl', views.khl_archive, name='khl_archive'),
+    url(r'^archivenhl', views.khl_archive, name='nhl_archive')
 ]
 """
 

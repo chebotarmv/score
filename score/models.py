@@ -31,20 +31,27 @@ class KhlTeam(models.Model):
         ("Динамо Р", "Динамо Р")
 
     )
-    id = models.IntegerField(primary_key=True)
-    team_name = models.CharField("Team name", max_length=50, blank=False, help_text="Choose team", choices=TEAM)
+    team_name = models.CharField(primary_key=True, max_length=50, blank=False, help_text="Choose team", choices=TEAM)
 
     def __str__(self):
         return self.team_name
 
+
 class KhlGame(models.Model):
     id = models.IntegerField(primary_key=True)
-    first_team_id = models.ForeignKey(KhlTeam, to_field="id", related_name="first_team", on_delete=models.CASCADE)
-    second_team_id  = models.ForeignKey(KhlTeam, to_field="id", related_name="second_team", on_delete=models.CASCADE)
+    first_team_name = models.ForeignKey(KhlTeam,
+                                        to_field="team_name",
+                                        related_name="first_team",
+                                        on_delete=models.CASCADE)
+    second_team_name = models.ForeignKey(KhlTeam,
+                                         to_field="team_name",
+                                         related_name="second_team",
+                                         on_delete=models.CASCADE)
     game_data = models.DateField(default=date.today)
 
+
 class KhlGameStat(models.Model):
-    team_id = models.ForeignKey(KhlTeam, to_field="id", on_delete=models.CASCADE)
+    team_name = models.ForeignKey(KhlTeam, to_field="team_name", on_delete=models.CASCADE)
     game_id = models.ForeignKey(KhlGame, to_field="id", on_delete=models.CASCADE)
     shot_count = models.IntegerField()
     reflected_count = models.IntegerField()
@@ -71,8 +78,7 @@ class NhlTeam(models.Model):
         ("Филадельфия Флайерз", "Филадельфия Флайерз")
     )
 
-    id = models.IntegerField(primary_key=True)
-    team_name = models.CharField("Team name", max_length=50, blank=False, help_text="Choose team", choices=TEAM)
+    team_name = models.CharField(primary_key=True, max_length=50, blank=False, help_text="Choose team", choices=TEAM)
 
     def __str__(self):
         return self.team_name
@@ -80,13 +86,19 @@ class NhlTeam(models.Model):
 
 class NhlGame(models.Model):
     id = models.IntegerField(primary_key=True)
-    first_team_id = models.ForeignKey(NhlTeam, to_field="id", related_name="first_team", on_delete=models.CASCADE)
-    second_team_id = models.ForeignKey(NhlTeam, to_field="id", related_name="second_team", on_delete=models.CASCADE)
+    first_team_name = models.ForeignKey(NhlTeam,
+                                        to_field="team_name",
+                                        related_name="first_team",
+                                        on_delete=models.CASCADE)
+    second_team_name = models.ForeignKey(NhlTeam,
+                                         to_field="team_name",
+                                         related_name="second_team",
+                                         on_delete=models.CASCADE)
     game_data = models.DateField(default=date.today)
 
 
 class NhlGameStat(models.Model):
-    team_id = models.ForeignKey(NhlTeam, to_field="id", on_delete=models.CASCADE)
+    team_name = models.ForeignKey(NhlTeam, to_field="team_name", on_delete=models.CASCADE)
     game_id = models.ForeignKey(NhlGame, to_field="id", on_delete=models.CASCADE)
     shot_count = models.IntegerField()
     reflected_count = models.IntegerField()
