@@ -7,7 +7,10 @@ urlpatterns = [
     url(r'^khl', views.khl, name='khl'),
     url(r'^nhl', views.nhl, name='nhl'),
     url(r'^archivekhl', views.khl_archive, name='khl_archive'),
-    url(r'^archivenhl', views.khl_archive, name='nhl_archive')
+    url(r'^archivenhl', views.nhl_archive, name='nhl_archive'),
+    url(r'^makekhldata', views.makekhldata, name='make_khl_data'),
+    url(r'^makenhldata', views.makenhldata, name='make_nhl_data'),
+    #url(r'home/khl/team', views.khl_team, name='khl_team'),
 ]
 """
 

@@ -4,6 +4,10 @@ from datetime import date
 
 
 class KhlTeam(models.Model):
+    class Meta:
+        verbose_name = 'Команда КХЛ'
+        verbose_name_plural = 'Команды КХЛ'
+
     TEAM = (
         ("Ак Барс", "Ак Барс"),
         ("Салават Юлаев", "Салават Юлаев"),
@@ -32,34 +36,54 @@ class KhlTeam(models.Model):
         ("Динамо Р", "Динамо Р")
 
     )
-    team_name = models.CharField(primary_key=True, max_length=50, blank=False, help_text="Choose team", choices=TEAM)
+
+    team_name = models.CharField('Имя команды',
+                                 primary_key=True,
+                                 max_length=50,
+                                 blank=False,
+                                 help_text="Choose team",
+                                 choices=TEAM)
 
     def __str__(self):
         return self.team_name
 
 
 class KhlGame(models.Model):
-    id = models.IntegerField(primary_key=True)
+    class Meta:
+        verbose_name = 'Игра КХЛ'
+        verbose_name_plural = 'Игры КХЛ'
+
+    id = models.IntegerField('id игры', primary_key=True)
     first_team_name = models.ForeignKey(KhlTeam,
+                                        verbose_name='имя первой команды',
                                         to_field="team_name",
                                         related_name="first_team",
                                         on_delete=models.CASCADE)
     second_team_name = models.ForeignKey(KhlTeam,
+                                         verbose_name='Имя второй команды',
                                          to_field="team_name",
                                          related_name="second_team",
                                          on_delete=models.CASCADE)
-    game_data = models.DateField(default=date.today)
+    game_data = models.DateField('Дата', default=date.today)
 
 
 class KhlGameStat(models.Model):
-    team_name = models.ForeignKey(KhlTeam, to_field="team_name", on_delete=models.CASCADE)
-    game_id = models.ForeignKey(KhlGame, to_field="id", on_delete=models.CASCADE)
-    shot_count = models.IntegerField()
-    reflected_count = models.IntegerField()
-    period_number = models.IntegerField()
+    class Meta:
+        verbose_name = 'Статистика по игре КХЛ'
+        verbose_name_plural = 'Статистика по играм КХЛ'
+
+    team_name = models.ForeignKey(KhlTeam, verbose_name='Имя команы', to_field="team_name", on_delete=models.CASCADE)
+    game_id = models.ForeignKey(KhlGame, verbose_name='id игры', to_field="id", on_delete=models.CASCADE)
+    shot_count = models.IntegerField('Броски по воротам')
+    reflected_count = models.IntegerField('Отбитые броски')
+    period_number = models.IntegerField('Период')
 
 
 class NhlTeam(models.Model):
+    class Meta:
+        verbose_name = 'Команда НХЛ'
+        verbose_name_plural = 'Команды НХЛ'
+
     TEAM = (
         ("Анахайм Дакс", "Анахайм Дакс"),
         ("Бостон Брюинз", "Бостон Брюинз"),
@@ -79,28 +103,38 @@ class NhlTeam(models.Model):
         ("Филадельфия Флайерз", "Филадельфия Флайерз")
     )
 
-    team_name = models.CharField(primary_key=True, max_length=50, blank=False, help_text="Choose team", choices=TEAM)
+    team_name = models.CharField('Имя команды', primary_key=True, max_length=50, blank=False, help_text="Choose team", choices=TEAM)
 
     def __str__(self):
         return self.team_name
 
 
 class NhlGame(models.Model):
-    id = models.IntegerField(primary_key=True)
+    class Meta:
+        verbose_name = 'Игра НХЛ'
+        verbose_name_plural = 'Игры НХЛ'
+
+    id = models.IntegerField('id игры', primary_key=True)
     first_team_name = models.ForeignKey(NhlTeam,
+                                        verbose_name='Имя первой команды',
                                         to_field="team_name",
                                         related_name="first_team",
                                         on_delete=models.CASCADE)
     second_team_name = models.ForeignKey(NhlTeam,
+                                         verbose_name='Имя второй команды',
                                          to_field="team_name",
                                          related_name="second_team",
                                          on_delete=models.CASCADE)
-    game_data = models.DateField(default=date.today)
+    game_data = models.DateField('Дата', default=date.today)
 
 
 class NhlGameStat(models.Model):
-    team_name = models.ForeignKey(NhlTeam, to_field="team_name", on_delete=models.CASCADE)
-    game_id = models.ForeignKey(NhlGame, to_field="id", on_delete=models.CASCADE)
-    shot_count = models.IntegerField()
-    reflected_count = models.IntegerField()
-    period_number = models.IntegerField()
+    class Meta:
+        verbose_name = 'Статистика по игре НХЛ'
+        verbose_name_plural = 'Статистика по играм НХЛ'
+
+    team_name = models.ForeignKey(NhlTeam, verbose_name='Имя команды', to_field="team_name", on_delete=models.CASCADE)
+    game_id = models.ForeignKey(NhlGame, verbose_name='id игры', to_field="id", on_delete=models.CASCADE)
+    shot_count = models.IntegerField('Броски по воротам')
+    reflected_count = models.IntegerField('Отбитые броски')
+    period_number = models.IntegerField('Период')
