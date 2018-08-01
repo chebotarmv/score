@@ -8,7 +8,7 @@ class KhlTeam(models.Model):
         verbose_name = 'Команда КХЛ'
         verbose_name_plural = 'Команды КХЛ'
 
-    TEAM = (
+    KHLTEAM = (
         ("Ак Барс", "Ак Барс"),
         ("Салават Юлаев", "Салават Юлаев"),
         ("Трактор", "Трактор"),
@@ -42,29 +42,11 @@ class KhlTeam(models.Model):
                                  max_length=50,
                                  blank=False,
                                  help_text="Choose team",
-                                 choices=TEAM)
+                                 choices=KHLTEAM)
 
     def __str__(self):
         return self.team_name
 
-
-class KhlGame(models.Model):
-    class Meta:
-        verbose_name = 'Игра КХЛ'
-        verbose_name_plural = 'Игры КХЛ'
-
-    id = models.IntegerField('id игры', primary_key=True)
-    first_team_name = models.ForeignKey(KhlTeam,
-                                        verbose_name='имя первой команды',
-                                        to_field="team_name",
-                                        related_name="first_team",
-                                        on_delete=models.CASCADE)
-    second_team_name = models.ForeignKey(KhlTeam,
-                                         verbose_name='Имя второй команды',
-                                         to_field="team_name",
-                                         related_name="second_team",
-                                         on_delete=models.CASCADE)
-    game_data = models.DateField('Дата', default=date.today)
 
 
 class KhlGameStat(models.Model):
@@ -72,11 +54,30 @@ class KhlGameStat(models.Model):
         verbose_name = 'Статистика по игре КХЛ'
         verbose_name_plural = 'Статистика по играм КХЛ'
 
-    team_name = models.ForeignKey(KhlTeam, verbose_name='Имя команы', to_field="team_name", on_delete=models.CASCADE)
-    game_id = models.ForeignKey(KhlGame, verbose_name='id игры', to_field="id", on_delete=models.CASCADE)
-    shot_count = models.IntegerField('Броски по воротам')
-    reflected_count = models.IntegerField('Отбитые броски')
-    period_number = models.IntegerField('Период')
+    game_id = models.IntegerField(verbose_name='id игры', primary_key=True)
+    first_team_name = models.ForeignKey(KhlTeam,
+                                        verbose_name='Имя команы',
+                                        related_name='first_team',
+                                        to_field="team_name",
+                                        on_delete=models.CASCADE)
+    second_team_name = models.ForeignKey(KhlTeam,
+                                        verbose_name='Имя команы',
+                                        related_name='second_team',
+                                        to_field="team_name",
+                                        on_delete=models.CASCADE)
+    fp_ft_shot = models.IntegerField('Броски по воротам первой команды в первом периоде', default=0)
+    fp_ft_reflected = models.IntegerField('Отбитые броски первой команды в первом периоде', default=0)
+    sp_ft_shot = models.IntegerField('Броски по воротам первой команды во втором периоде', default=0)
+    sp_ft_reflected = models.IntegerField('Отбитые броски первой команды во втором периоде', default=0)
+    tp_ft_shot = models.IntegerField('Броски по воротам первой команды в третьем периоде', default=0)
+    tp_ft_reflected = models.IntegerField('Отбитые броски первой команды в третьем периоде', default=0)
+    fp_st_shot = models.IntegerField('Броски по воротам второй команды в первом периоде', default=0)
+    fp_st_reflected = models.IntegerField('Отбитые броски второй команды в первом периоде', default=0)
+    sp_st_shot = models.IntegerField('Броски по воротам второй команды во втором периоде', default=0)
+    sp_st_reflected = models.IntegerField('Отбитые броски второй команды во втором периоде', default=0)
+    tp_st_shot = models.IntegerField('Броски по воротам третьей команды в третьем периоде', default=0)
+    tp_st_reflected = models.IntegerField('Отбитые броски третьей команды в третьем периоде', default=0)
+    game_data = models.DateField('Дата', default=date.today)
 
 
 class NhlTeam(models.Model):
@@ -84,7 +85,7 @@ class NhlTeam(models.Model):
         verbose_name = 'Команда НХЛ'
         verbose_name_plural = 'Команды НХЛ'
 
-    TEAM = (
+    NHLTEAM = (
         ("Анахайм Дакс", "Анахайм Дакс"),
         ("Бостон Брюинз", "Бостон Брюинз"),
         ("Вашингтон Кэпиталз", "Вашингтон Кэпиталз"),
@@ -103,38 +104,42 @@ class NhlTeam(models.Model):
         ("Филадельфия Флайерз", "Филадельфия Флайерз")
     )
 
-    team_name = models.CharField('Имя команды', primary_key=True, max_length=50, blank=False, help_text="Choose team", choices=TEAM)
+    team_name = models.CharField('Имя команды',
+                                 primary_key=True,
+                                 max_length=50,
+                                 blank=False,
+                                 help_text="Choose team",
+                                 choices=NHLTEAM)
 
     def __str__(self):
         return self.team_name
-
-
-class NhlGame(models.Model):
-    class Meta:
-        verbose_name = 'Игра НХЛ'
-        verbose_name_plural = 'Игры НХЛ'
-
-    id = models.IntegerField('id игры', primary_key=True)
-    first_team_name = models.ForeignKey(NhlTeam,
-                                        verbose_name='Имя первой команды',
-                                        to_field="team_name",
-                                        related_name="first_team",
-                                        on_delete=models.CASCADE)
-    second_team_name = models.ForeignKey(NhlTeam,
-                                         verbose_name='Имя второй команды',
-                                         to_field="team_name",
-                                         related_name="second_team",
-                                         on_delete=models.CASCADE)
-    game_data = models.DateField('Дата', default=date.today)
-
 
 class NhlGameStat(models.Model):
     class Meta:
         verbose_name = 'Статистика по игре НХЛ'
         verbose_name_plural = 'Статистика по играм НХЛ'
 
-    team_name = models.ForeignKey(NhlTeam, verbose_name='Имя команды', to_field="team_name", on_delete=models.CASCADE)
-    game_id = models.ForeignKey(NhlGame, verbose_name='id игры', to_field="id", on_delete=models.CASCADE)
-    shot_count = models.IntegerField('Броски по воротам')
-    reflected_count = models.IntegerField('Отбитые броски')
-    period_number = models.IntegerField('Период')
+    game_id = models.IntegerField(verbose_name='id игры', primary_key=True)
+    first_team_name = models.ForeignKey(NhlTeam,
+                                        verbose_name='Имя команы',
+                                        related_name='first_team',
+                                        to_field="team_name",
+                                        on_delete=models.CASCADE)
+    second_team_name = models.ForeignKey(NhlTeam,
+                                        verbose_name='Имя команы',
+                                        related_name='second_team',
+                                        to_field="team_name",
+                                        on_delete=models.CASCADE)
+    fp_ft_shot = models.IntegerField('Броски по воротам первой команды в первом периоде', default=0)
+    fp_ft_reflected = models.IntegerField('Отбитые броски первой команды в первом периоде', default=0)
+    sp_ft_shot = models.IntegerField('Броски по воротам первой команды во втором периоде', default=0)
+    sp_ft_reflected = models.IntegerField('Отбитые броски первой команды во втором периоде', default=0)
+    tp_ft_shot = models.IntegerField('Броски по воротам первой команды в третьем периоде', default=0)
+    tp_ft_reflected = models.IntegerField('Отбитые броски первой команды в третьем периоде', default=0)
+    fp_st_shot = models.IntegerField('Броски по воротам второй команды в первом периоде', default=0)
+    fp_st_reflected = models.IntegerField('Отбитые броски второй команды в первом периоде', default=0)
+    sp_st_shot = models.IntegerField('Броски по воротам второй команды во втором периоде', default=0)
+    sp_st_reflected = models.IntegerField('Отбитые броски второй команды во втором периоде', default=0)
+    tp_st_shot = models.IntegerField('Броски по воротам третьей команды в третьем периоде', default=0)
+    tp_st_reflected = models.IntegerField('Отбитые броски третьей команды в третьем периоде', default=0)
+    game_data = models.DateField('Дата', default=date.today)

@@ -13,10 +13,21 @@
 
  <h1><a href="http://chebotarmv.pythonanywhere.com/khl">KHL</a> </h1>
  <h3><a href="http://chebotarmv.pythonanywhere.com/archivekhl">KHL Archive</a> </h3>
- <!-- Блок контент с списком последних 5 игр -->
+
+  {% for dat in khldata %}
+ <div><a href=""> {{ dat.game_id }} </a> </div>
+ <div><a href=""> {{ dat.first_team_name_id }} </a> </div>
+ <div> <a href=""> {{ dat.second_team_name_id }} </a> </div>
+ <div> <a href=""> {{ dat.game_data }} </a> </div>
+ {% endfor%}
 
  <h1><a href="http://chebotarmv.pythonanywhere.com/nhl">NHL</a> </h1>
  <h3><a href="http://chebotarmv.pythonanywhere.com/archivenhl">NHL Archive</a> </h3>
- <!-- Блок контент с списком последних 5 игр -->
+  {% for dat in nhldata %}
+ <div><a href=""> {{ dat.game_id }} </a> </div>
+ <div><a href=""> {{ dat.first_team_name_id }} </a> </div>
+ <div> <a href=""> {{ dat.second_team_name_id }} </a> </div>
+ <div> <a href=""> {{ dat.game_data }} </a> </div>
+ {% endfor%}
 
  </body>

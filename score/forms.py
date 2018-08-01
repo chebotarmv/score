@@ -1,81 +1,19 @@
-from django import forms
+from django.forms import ModelForm, SelectDateWidget
+from score.models import KhlGameStat
+from score.models import NhlGameStat
 
-KHL_TEAM = (
-        ("Ак Барс", "Ак Барс"),
-        ("Салават Юлаев", "Салават Юлаев"),
-        ("Трактор", "Трактор"),
-        ("Автомобилист", "Автомобилист"),
-        ("Металлург Мг", "Металлург Мг"),
-        ("Нефтехимик", "Нефтехимик"),
-        ("Авангард", "Авангард"),
-        ("Амур", "Амур"),
-        ("Торпедо", "Торпедо"),
-        ("Сибирь", "Сибирь"),
-        ("Барыс", "Барыс"),
-        ("Адмирал", "Адмирал"),
-        ("Куньлунь РС", "Куньлунь РС"),
-        ("СКА", "СКА"),
-        ("ЦСКА", "ЦСКА"),
-        ("Йокерит", "Йокерит"),
-        ("Локомотив", "Локомотив"),
-        ("ХК Сочи", "ХК Сочи"),
-        ("Спартак", "Спартак"),
-        ("Северсталь", "Северсталь"),
-        ("Динамо Мск", "Динамо Мск"),
-        ("Динамо Мн", "Динамо Мн"),
-        ("Витязь", "Витязь"),
-        ("Слован", "Слован"),
-        ("Динамо Р", "Динамо Р")
-    )
+class KhlGameStatForm(ModelForm):
+    class Meta:
+        model = KhlGameStat
+        fields = ['first_team_name', 'second_team_name', 'fp_ft_shot', 'fp_ft_reflected', 'sp_ft_shot',
+                  'sp_ft_reflected', 'tp_ft_shot', 'tp_ft_reflected', 'fp_st_shot', 'fp_st_reflected', 'sp_st_shot',
+                  'sp_st_reflected', 'tp_st_shot', 'tp_st_reflected', 'game_data']
+        widgets = {'game_data': SelectDateWidget()}
 
-NHL_TEAM = (
-        ("Анахайм Дакс", "Анахайм Дакс"),
-        ("Бостон Брюинз", "Бостон Брюинз"),
-        ("Вашингтон Кэпиталз", "Вашингтон Кэпиталз"),
-        ("Вегас Голден Найтс", "Вегас Голден Найтс"),
-        ("Виннипег Джетс", "Виннипег Джетс"),
-        ("Коламбус Блю Джекетс", "Коламбус Блю Джекетс"),
-        ("Колорадо Эвеланш", "Колорадо Эвеланш"),
-        ("Лос-Анджелес Кингз", "Лос-Анджелес Кингз"),
-        ("Миннесота Уайлд", "Миннесота Уайлд"),
-        ("Нью-Джерси Дэвилз", "Нью-Джерси Дэвилз"),
-        ("Нэшвилл Предаторз", "Нэшвилл Предаторз"),
-        ("Питтсбург Пингвинз", "Питтсбург Пингвинз"),
-        ("Сан-Хосе Шаркс", "Сан-Хосе Шаркс"),
-        ("Тампа-Бэй Лайтнинг", "Тампа-Бэй Лайтнинг"),
-        ("Торонто Мэйпл Лифс", "Торонто Мэйпл Лифс"),
-        ("Филадельфия Флайерз", "Филадельфия Флайерз")
-    )
-PERIOD = (
-    ("1", "1"),
-    ("2", "2"),
-    ("3", "3")
-)
-
-class KhlGameForm(forms.Form):
-    first_team = forms.ChoiceField(label='Выберите команду', choices=KHL_TEAM)
-    second_team = forms.ChoiceField(label='Выберите команду', choices=KHL_TEAM)
-    data = forms.DateField(label='Введите дату игры', widget=forms.SelectDateWidget)
-    first_period = forms.ChoiceField(label='Введите перод', choices=PERIOD, initial='1')
-    fp_shot_count = forms.IntegerField(label='Количество бросков')
-    fp_reflected_count = forms.IntegerField(label='Количество отраженных бросков')
-    second_period = forms.ChoiceField(label='Введите перод', choices=PERIOD, initial='2')
-    sp_shot_count = forms.IntegerField(label='Количество бросков')
-    sp_reflected_count = forms.IntegerField(label='Количество отраженных бросков')
-    third_period = forms.ChoiceField(label='Введите перод', choices=PERIOD, initial='3')
-    tp_shot_count = forms.IntegerField(label='Количество бросков')
-    tp_reflected_count = forms.IntegerField(label='Количество отраженных бросков')
-
-class NhlGameForm(forms.Form):
-    first_team = forms.ChoiceField(label='Выберите команду', choices=NHL_TEAM)
-    second_team = forms.ChoiceField(label='Выберите команду', choices=NHL_TEAM)
-    data = forms.DateField(label='Введите дату игры', widget=forms.SelectDateWidget)
-    first_period = forms.ChoiceField(label='Введите перод', choices=PERIOD, initial='1')
-    fp_shot_count = forms.IntegerField(label='Количество бросков')
-    fp_reflected_count = forms.IntegerField(label='Количество отраженных бросков')
-    second_period = forms.ChoiceField(label='Введите перод', choices=PERIOD, initial='2')
-    sp_shot_count = forms.IntegerField(label='Количество бросков')
-    sp_reflected_count = forms.IntegerField(label='Количество отраженных бросков')
-    third_period = forms.ChoiceField(label='Введите перод', choices=PERIOD, initial='3')
-    tp_shot_count = forms.IntegerField(label='Количество бросков')
-    tp_reflected_count = forms.IntegerField(label='Количество отраженных бросков')
+class NhlGameStatForm(ModelForm):
+    class Meta:
+        model = NhlGameStat
+        fields = ['first_team_name', 'second_team_name', 'fp_ft_shot', 'fp_ft_reflected', 'sp_ft_shot',
+                  'sp_ft_reflected', 'tp_ft_shot', 'tp_ft_reflected', 'fp_st_shot', 'fp_st_reflected', 'sp_st_shot',
+                  'sp_st_reflected', 'tp_st_shot', 'tp_st_reflected', 'game_data']
+        widgets = {'game_data': SelectDateWidget()}

@@ -8,12 +8,12 @@
  <p><a href="http://chebotarmv.pythonanywhere.com/home">Главная</a></p>
  <p><a href="http://chebotarmv.pythonanywhere.com/khl">KHL</a></p>
  <p><a href="http://chebotarmv.pythonanywhere.com/nhl">NHL</a></p>
- <p><a href="">Внести данные</a></p>
+ <p><a href="http://chebotarmv.pythonanywhere.com/makekhldata">Внести данные</a></p>
  <h1><a href="http://chebotarmv.pythonanywhere.com/khl">KHL</a> </h1>
  <h3><a href="http://chebotarmv.pythonanywhere.com/archivekhl">KHL Archive</a> </h3>
  {% for team in khl_teams %}
     <div>
-        <h1><a href="">{{ team }}</a></h1>
+        <h1><a href="http://127.0.0.1:8000/khl/{{team}}">{{ team }}</a></h1>
     </div>
 {% endfor %}
 
