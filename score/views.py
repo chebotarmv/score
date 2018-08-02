@@ -3,31 +3,33 @@ from .models import KhlTeam, NhlTeam, KhlGameStat, NhlGameStat
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from score.forms import *
-from django.template import Context
-
-
 
 
 def home_page(request):
     khldata = KhlGameStat.objects.all().values().order_by('-game_id')[:5]
     nhldata = NhlGameStat.objects.all().values().order_by('-game_id')[:5]
-    return render(request, 'score/home_page.html', context={'khldata':khldata, 'nhldata':nhldata})
+    return render(request, 'score/home_page.html', context={'khldata': khldata, 'nhldata': nhldata})
+
 
 def khl(request):
     khl_teams = KhlTeam.objects.all()
     return render(request, 'score/khl_page.html', {'khl_teams': khl_teams})
 
+
 def nhl(request):
     nhl_teams = NhlTeam.objects.all()
     return render(request, 'score/nhl_page.html', {'nhl_teams': nhl_teams})
 
+
 def khl_archive(request):
-    data = KhlGameStat.objects.all().values().order_by('-game_id')
-    return render(request, 'score/khl_archive.html', context={'data':data})
+    data = KhlGameStat.objects.all().values().order_by('-game_id')[:5]
+    return render(request, 'score/khl_archive.html', context={'data': data})
+
 
 def nhl_archive(request):
-    data = NhlGameStat.objects.all().values().order_by('-game_id')
-    return render(request, 'score/khl_archive.html', context={'data':data})
+    data = NhlGameStat.objects.all().values().order_by('-game_id')[:5]
+    return render(request, 'score/khl_archive.html', context={'data': data})
+
 
 def makekhldata(request):
     if request.method == 'POST':
@@ -39,7 +41,8 @@ def makekhldata(request):
         return HttpResponseRedirect('/thanks/')
     else:
         khlform = KhlGameStatForm()
-    return render(request, "score/make_khl_data.html", {"form": khlform})
+    return render(request, "score/make_khl_data.html", {'form': khlform})
+
 
 def makenhldata(request):
     if request.method == 'POST':
@@ -51,15 +54,18 @@ def makenhldata(request):
         return HttpResponseRedirect('/thanks/')
     else:
         nhlform = NhlGameStatForm()
-    return render(request, "score/make_nhl_data.html", {"form": nhlform})
+    return render(request, "score/make_nhl_data.html", {'form': nhlform})
+
 
 def thanks(request):
     return render(request, 'score/thanks.html', {})
 
+
 def khlteamstat(request, name):
     def get_last_game_numbers(name):
         last_game_context = {}
-        games = KhlGameStat.objects.filter(first_team_name_id=name) | KhlGameStat.objects.filter(second_team_name_id=name)
+        games = KhlGameStat.objects.filter(first_team_name_id=name) | \
+                KhlGameStat.objects.filter(second_team_name_id=name)
         last_game = games[:1].values()
         last_game = last_game[0]
         if last_game['first_team_name_id'] == name:
@@ -189,21 +195,28 @@ def khlteamstat(request, name):
                 reflected_in_second_period_all_games.append(int(sp_st_reflected))
                 shots_in_third_period_all_games.append(int(tp_st_shot))
                 reflected_in_third_period_all_games.append(int(tp_st_reflected))
-        shots_in_first_period_all_games = sum(shots_in_first_period_all_games) // len(shots_in_first_period_all_games)
+        shots_in_first_period_all_games = sum(shots_in_first_period_all_games) // \
+                                          len(shots_in_first_period_all_games)
         all_games_context['shots_in_first_period_all_games'] = shots_in_first_period_all_games
-        reflected_in_first_period_all_games = sum(reflected_in_first_period_all_games) // len(reflected_in_first_period_all_games)
+        reflected_in_first_period_all_games = sum(reflected_in_first_period_all_games) // \
+                                              len(reflected_in_first_period_all_games)
         all_games_context['reflected_in_first_period_all_games'] = reflected_in_first_period_all_games
-        shots_in_second_period_all_games = sum(shots_in_second_period_all_games) // len(shots_in_second_period_all_games)
+        shots_in_second_period_all_games = sum(shots_in_second_period_all_games) // \
+                                           len(shots_in_second_period_all_games)
         all_games_context['shots_in_second_period_all_games'] = shots_in_second_period_all_games
-        reflected_in_second_period_all_games = sum(reflected_in_second_period_all_games) // len(reflected_in_second_period_all_games)
+        reflected_in_second_period_all_games = sum(reflected_in_second_period_all_games) // \
+                                               len(reflected_in_second_period_all_games)
         all_games_context['reflected_in_second_period_all_games'] = reflected_in_second_period_all_games
-        shots_in_third_period_all_games = sum(shots_in_third_period_all_games) // len(shots_in_third_period_all_games)
+        shots_in_third_period_all_games = sum(shots_in_third_period_all_games) // \
+                                          len(shots_in_third_period_all_games)
         all_games_context['shots_in_third_period_all_games'] = shots_in_third_period_all_games
-        reflected_in_third_period_all_games = sum(reflected_in_third_period_all_games) // len(reflected_in_third_period_all_games)
+        reflected_in_third_period_all_games = sum(reflected_in_third_period_all_games) // \
+                                              len(reflected_in_third_period_all_games)
         all_games_context['reflected_in_third_period_all_games'] = reflected_in_third_period_all_games
         return all_games_context
     context = {**get_last_game_numbers(name), **get_last_five_games_numbers(name), **get_all_games_numbers(name)}
-    return render(request, 'score/khlteamstat.html',context)
+    return render(request, 'score/khlteamstat.html', context)
+
 
 def nhlteamstat(request, name):
     def get_last_game_numbers(name):
@@ -339,18 +352,24 @@ def nhlteamstat(request, name):
                 reflected_in_second_period_all_games.append(int(sp_st_reflected))
                 shots_in_third_period_all_games.append(int(tp_st_shot))
                 reflected_in_third_period_all_games.append(int(tp_st_reflected))
-        shots_in_first_period_all_games = sum(shots_in_first_period_all_games) // len(shots_in_first_period_all_games)
+        shots_in_first_period_all_games = sum(shots_in_first_period_all_games) // \
+                                          len(shots_in_first_period_all_games)
         all_games_context['shots_in_first_period_all_games'] = shots_in_first_period_all_games
-        reflected_in_first_period_all_games = sum(reflected_in_first_period_all_games) // len(reflected_in_first_period_all_games)
+        reflected_in_first_period_all_games = sum(reflected_in_first_period_all_games) // \
+                                              len(reflected_in_first_period_all_games)
         all_games_context['reflected_in_first_period_all_games'] = reflected_in_first_period_all_games
-        shots_in_second_period_all_games = sum(shots_in_second_period_all_games) // len(shots_in_second_period_all_games)
+        shots_in_second_period_all_games = sum(shots_in_second_period_all_games) // \
+                                           len(shots_in_second_period_all_games)
         all_games_context['shots_in_second_period_all_games'] = shots_in_second_period_all_games
-        reflected_in_second_period_all_games = sum(reflected_in_second_period_all_games) // len(reflected_in_second_period_all_games)
+        reflected_in_second_period_all_games = sum(reflected_in_second_period_all_games) // \
+                                               len(reflected_in_second_period_all_games)
         all_games_context['reflected_in_second_period_all_games'] = reflected_in_second_period_all_games
-        shots_in_third_period_all_games = sum(shots_in_third_period_all_games) // len(shots_in_third_period_all_games)
+        shots_in_third_period_all_games = sum(shots_in_third_period_all_games) // \
+                                          len(shots_in_third_period_all_games)
         all_games_context['shots_in_third_period_all_games'] = shots_in_third_period_all_games
-        reflected_in_third_period_all_games = sum(reflected_in_third_period_all_games) // len(reflected_in_third_period_all_games)
+        reflected_in_third_period_all_games = sum(reflected_in_third_period_all_games) // \
+                                              len(reflected_in_third_period_all_games)
         all_games_context['reflected_in_third_period_all_games'] = reflected_in_third_period_all_games
         return all_games_context
     context = {**get_last_game_numbers(name), **get_last_five_games_numbers(name), **get_all_games_numbers(name)}
-    return render(request, 'score/nhlteamstat.html',context)
+    return render(request, 'score/nhlteamstat.html', context)
