@@ -7,7 +7,7 @@ class KhlTeam(models.Model):
     class Meta:
         verbose_name = 'Команда КХЛ'
         verbose_name_plural = 'Команды КХЛ'
-
+        
     KHLTEAM = (
         ("Авангард", "Авангард"),
         ("Автомобилист", "Автомобилист"),
