@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html>
- <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Список команд</title>
- </head>
- <body>
- <p><a href="http://chebotarmv.pythonanywhere.com/home">Главная</a></p>
- <p><a href="http://chebotarmv.pythonanywhere.com/khl">KHL</a></p>
- <p><a href="http://chebotarmv.pythonanywhere.com/nhl">NHL</a></p>
- <p><a href="http://chebotarmv.pythonanywhere.com/makenhldata">Внести данные</a></p>
- <h1><a href="http://chebotarmv.pythonanywhere.com/nhl">NHL</a> </h1>
- <h3><a href="http://chebotarmv.pythonanywhere.com/archivenhl">NHL Archive</a> </h3>
- {% for team in nhl_teams %}
+{% extends 'score/base.html' %}
+{% block content %}
+
+{% for team in nhl_teams %}
     <div>
-        <h1><a href="http://127.0.0.1:8000/nhl/{{team}}">{{ team }}</a></h1>
+        <h3><a href="http://chebotarmv.pythonanywhere.com/nhl/{{team}}">{{ team }}</a></h3>
     </div>
 {% endfor %}
 
- </body>
+{% endblock %}

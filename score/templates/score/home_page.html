@@ -1,33 +1,22 @@
-<!DOCTYPE html>
-<html>
- <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Статистика</title>
- </head>
- <body>
- <p><a href="http://chebotarmv.pythonanywhere.com/home">Главная</a></p>
- <p><a href="http://chebotarmv.pythonanywhere.com/khl">KHL</a></p>
- <p><a href="http://chebotarmv.pythonanywhere.com/nhl">NHL</a></p>
- <p><a href="http://chebotarmv.pythonanywhere.com/makekhldata", target="_blank">Внести КХЛ данные</a></p>
- <p><a href="http://chebotarmv.pythonanywhere.com/makenhldata", target="_blank">Внести НХЛ данные</a></p>
+{% extends 'score/base.html' %}
+{% block content %}
 
- <h1><a href="http://chebotarmv.pythonanywhere.com/khl">KHL</a> </h1>
- <h3><a href="http://chebotarmv.pythonanywhere.com/archivekhl">KHL Archive</a> </h3>
+ <p>Последние игры КХЛ</p>
 
   {% for dat in khldata %}
- <div><a href=""> {{ dat.game_id }} </a> </div>
- <div><a href=""> {{ dat.first_team_name_id }} </a> </div>
- <div> <a href=""> {{ dat.second_team_name_id }} </a> </div>
- <div> <a href=""> {{ dat.game_data }} </a> </div>
+ <div> {{ dat.game_id }} </div>
+ <div> {{ dat.first_team_name_id }} </div>
+ <div> {{ dat.second_team_name_id }} </div>
+ <div> {{ dat.game_data }} </div>
  {% endfor%}
 
- <h1><a href="http://chebotarmv.pythonanywhere.com/nhl">NHL</a> </h1>
- <h3><a href="http://chebotarmv.pythonanywhere.com/archivenhl">NHL Archive</a> </h3>
+ <p>Последние игры НХЛ</p>
+
   {% for dat in nhldata %}
- <div><a href=""> {{ dat.game_id }} </a> </div>
- <div><a href=""> {{ dat.first_team_name_id }} </a> </div>
- <div> <a href=""> {{ dat.second_team_name_id }} </a> </div>
- <div> <a href=""> {{ dat.game_data }} </a> </div>
+ <div> {{ dat.game_id }} </div>
+ <div> {{ dat.first_team_name_id }} </div>
+ <div> {{ dat.second_team_name_id }} </div>
+ <div> {{ dat.game_data }} </div>
  {% endfor%}
 
- </body>
+{% endblock %}
